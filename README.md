@@ -1,6 +1,6 @@
 # C130 — Daytona Viewer/Member bypasses WRITE_SANDBOXES via proxy toolbox sibling path
 
-**Status:** CONFIRMED (static + LOCAL RUNTIME e2e) — NOT submitted  
+**Status:** CONFIRMED (static + LOCAL RUNTIME e2e) — SUBMITTING to Intigriti (owner approved 2026-11-02)  
 **Platform / program:** Intigriti — Daytona Bug Bounty (`daytona/daytonabugbounty`) €200–€3,500  
 **Also in SECURITY.md scope:** Authentication/authorization privilege escalation; public daytonaio repos; app.daytona.io API  
 **Asset:** `daytonaio/daytona` @ tag `v0.190.0` (`01c502bb`) — last public self-hostable release (main archived Jun 2026; core moved private; tag remains the public OSS artifact)  
@@ -70,4 +70,4 @@ Proxy Bearer validation for toolbox (and preferably all non-public preview toolb
 
 ## Holds / submit
 
-Do **not** submit without owner approval. Holds unchanged: C30, C75/C76, C128, C129.
+Owner approved Intigriti submit 2026-11-02 (local e2e + SaaS Viewer honesty). Holds unchanged: C30, C75/C76, C128, C129.
