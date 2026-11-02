@@ -12,7 +12,7 @@ Against real v0.190.0 source (`01c502bb`), with synthetic org/user data on local
 | Developer (`write:sandboxes`) on API | allowed |
 | Outsider / access-gate 404 on proxy | denied |
 
-Evidence package: `EVIDENCE_C130.tar.gz` (sha256 `105f03913eccdee2f12a765b860ab7139a68a37bc9da5bde3c4adb3ec4a044e2`), includes NestJS + Go e2e specs/logs under `evidence/local-e2e/`.
+Evidence package: `EVIDENCE_C130.tar.gz` (sha256 `cb0837e5de956eeeb473919c3dbb7dafe25aa455111fbaa5c926684998bac7a0`), includes NestJS + Go e2e specs/logs under `evidence/local-e2e/`.
 
 ## Important honesty note (live SaaS)
 During product UI review on `app.daytona.io`, the invite/assignment copy for **Viewer** already describes running processes, R/W files, and terminal/desktop **inside sandboxes** as part of Viewer. We therefore treat live SaaS as potentially **by-design** or already redefined, and **did not** claim a SaaS runtime RCE. This report is scoped to the **public OSS artifact v0.190.0** (repo archived Jun 2026; core private), where API vs proxy still disagree. Please triage against self-hosted / last public release expectations and current SaaS policy.
