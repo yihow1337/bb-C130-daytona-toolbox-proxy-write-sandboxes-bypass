@@ -1,0 +1,11 @@
+Target: daytonaio/daytona @ v0.190.0 (01c502bb)
+Class: sibling-endpoint authz — API toolbox WRITE_SANDBOXES vs proxy HasSandboxAccess membership-only
+
+[PASS] API ToolboxController class requires WRITE_SANDBOXES
+[PASS] Preview.hasSandboxAccess checks only organizationUserService.exists
+[PASS] Preview.hasSandboxAccess has no WRITE_SANDBOXES decorator
+[PASS] Proxy Bearer path calls HasSandboxAccess
+[PASS] Proxy /toolbox/ uses TOOLBOX_PORT → Authenticate always
+[PASS] Docs: Viewer is required baseline; write needs assignments
+
+OVERALL PASS
