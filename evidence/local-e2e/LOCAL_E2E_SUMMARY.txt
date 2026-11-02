@@ -1,0 +1,16 @@
+C130 LOCAL E2E — PASS (authz-layer)
+Target: daytonaio/daytona @ v0.190.0 (01c502bb)
+Date: 2026-11-02 Asia/Taipei
+
+NestJS (API):
+  [PASS] Viewer denied on ToolboxController via OrganizationAuthContextGuard (403)
+  [PASS] SAME Viewer allowed by PreviewController.hasSandboxAccess (true)
+  [PASS] Developer allowed on ToolboxController (control)
+  [PASS] Outsider denied by hasSandboxAccess (404) (control)
+
+Go proxy:
+  [PASS] Authenticate accepts Viewer Bearer when API access gate returns 200; strips Authorization
+  [PASS] Authenticate rejects Bearer when API access gate returns 404
+
+OVERALL: PASS (authz-layer e2e). Full sandbox runner not exercised (no Docker).
+Honesty note: SaaS product copy may treat Viewer process/FS as by-design; this proof is for public OSS tag v0.190.0.

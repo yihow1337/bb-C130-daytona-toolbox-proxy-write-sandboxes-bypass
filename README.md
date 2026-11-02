@@ -1,6 +1,6 @@
 # C130 — Daytona Viewer/Member bypasses WRITE_SANDBOXES via proxy toolbox sibling path
 
-**Status:** CONFIRMED (local/static code proof) — NOT submitted  
+**Status:** CONFIRMED (static + LOCAL RUNTIME e2e) — NOT submitted  
 **Platform / program:** Intigriti — Daytona Bug Bounty (`daytona/daytonabugbounty`) €200–€3,500  
 **Also in SECURITY.md scope:** Authentication/authorization privilege escalation; public daytonaio repos; app.daytona.io API  
 **Asset:** `daytonaio/daytona` @ tag `v0.190.0` (`01c502bb`) — last public self-hostable release (main archived Jun 2026; core moved private; tag remains the public OSS artifact)  
@@ -27,6 +27,7 @@ Upstream docs: Members' resource access is based on Assignments; **Viewer (requi
 
 ## Proof
 
+- **LOCAL RUNTIME e2e PASS** (see LOCAL E2E RESULTS): NestJS 4/4 + Go proxy 2/2.
 - Upstream auth unit specs already encode the gap: `toolbox.deprecated.controller.auth.spec.ts` asserts WRITE_SANDBOXES; `preview.controller.auth.spec.ts` asserts `hasSandboxAccess` has **empty** auth-context guards.  
 - Static sibling proof: `evidence/STATIC_SIBLING_PROOF.txt` OVERALL PASS.  
 - Snippets under `evidence/snippet_*`.
@@ -40,6 +41,32 @@ Upstream docs: Members' resource access is based on Assignments; **Viewer (requi
 ## Fix
 
 Proxy Bearer validation for toolbox (and preferably all non-public preview toolbox ports) must enforce the same `write:sandboxes` (or a dedicated toolbox permission) as `ToolboxController`, e.g. call an API that runs `OrganizationAuthContextGuard` + `RequiredOrganizationResourcePermissions([WRITE_SANDBOXES])` + `SandboxAccessGuard`, not membership-only `HasSandboxAccess`.
+
+
+
+## LOCAL E2E RESULTS (2026-11-02 Asia/Taipei)
+
+**Verdict: PASS (authz-layer end-to-end)** — full runner/sandbox stack not required; both halves of the sibling gate were executed against the real v0.190.0 source.
+
+| Half | What ran | Result |
+|------|----------|--------|
+| (A) API negative | Real `OrganizationAuthContextGuard` against real `ToolboxController` metadata with synthetic Viewer (Member, `assignedRoles=[]`, no `write:sandboxes`) | **403 AccessDeniedException** |
+| (B) Proxy positive | Real `PreviewController.hasSandboxAccess` (membership-only) with SAME Viewer | **true / 200** |
+| (B′) Proxy Authenticate | Real Go `Proxy.Authenticate` Bearer path; mocked API access gate returning 200 | **accepted Viewer Bearer**, Authorization stripped, will forward toolbox |
+| control-1 | Developer (`write:sandboxes`) on API Toolbox path | allowed |
+| control-2 | Outsider / access-gate 404 on proxy | denied |
+
+**Exact environment**
+- Target: `daytonaio/daytona` tag `v0.190.0` commit `01c502bb1f1ff8f2885d0cd490e043736083dca8`
+- Node v24.22.1 / yarn 4.13.0 / Go 1.27.3 linux/amd64
+- Commands: see `evidence/local-e2e/COMMANDS.txt`
+- Logs: `evidence/local-e2e/nestjs-authz-e2e-run.log`, `evidence/local-e2e/proxy-authz-e2e-run.log`
+- Specs: `evidence/local-e2e/c130.local-e2e.authz.spec.ts`, `evidence/local-e2e/c130_local_e2e_test.go`
+
+**What this proves / does not prove**
+- PROVES: at v0.190.0 the API toolbox write-permission gate and the proxy membership-only gate disagree for the same Viewer identity; the proxy will accept that Viewer's Bearer and forward toolbox.
+- DOES NOT prove live SaaS (`app.daytona.io`): public repo archived Jun 2026; product UI/docs for Viewer now describe process/FS as in-role. Local inconsistency remains in the last public OSS tag; SaaS may have closed it or redefined Viewer by design.
+- No Docker/full runner was available on the box; authz-layer runtime with mocked runner/API is the farthest honest e2e without spinning production-like infra.
 
 ## Holds / submit
 

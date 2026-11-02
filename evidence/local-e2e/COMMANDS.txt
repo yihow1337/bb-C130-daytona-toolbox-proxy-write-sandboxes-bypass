@@ -1,0 +1,20 @@
+# Exact commands used for C130 local e2e (Asia/Taipei box, 2026-11-02)
+
+# 1) Checkout already present:
+#    /workspace/bounty-research/src/daytona @ tag v0.190.0 (01c502bb)
+
+# 2) Install JS deps (one-time):
+cd /workspace/bounty-research/src/daytona
+export COREPACK_HOME="$HOME/.cache/corepack" PATH="$HOME/.local/bin:$PATH"
+corepack enable --install-directory ~/.local/bin
+yarn install
+
+# 3) NestJS runtime authz e2e (API ToolboxController vs Preview.hasSandboxAccess):
+yarn jest --config apps/api/jest.config.ts \
+  apps/api/src/sandbox/controllers/c130.local-e2e.authz.spec.ts --verbose
+# Result: 4/4 PASS  (Viewer 403 on API; Viewer true on proxy gate; Developer allowed; outsider 404)
+
+# 4) Go proxy runtime e2e (Authenticate Bearer path against mocked API access gate):
+cd apps/proxy
+go test ./pkg/proxy/ -run 'TestC130_' -v -count=1
+# Result: 2/2 PASS  (access-gate 200 -> accept Viewer; access-gate 404 -> reject)

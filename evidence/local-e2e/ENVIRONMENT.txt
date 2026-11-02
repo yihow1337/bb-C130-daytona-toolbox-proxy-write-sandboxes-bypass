@@ -1,0 +1,8 @@
+date_local_taipei=2026-11-02T08:34:35+08:00
+git_describe=v0.190.0
+git_commit=01c502bb1f1ff8f2885d0cd490e043736083dca8
+git_commit_short=01c502bb
+node=v24.22.1
+go=go version go1.27.3 linux/amd64
+yarn=4.13.0
+uname=Linux grok-bot-vm-321234215 6.12.94+ #1 SMP PREEMPT_DYNAMIC Mon Oct 26 15:07:58 UTC 2026 x86_64 GNU/Linux

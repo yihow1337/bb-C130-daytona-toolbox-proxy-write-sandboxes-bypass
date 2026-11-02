@@ -1,0 +1,33 @@
+go: downloading github.com/coreos/go-oidc/v3 v3.12.0
+go: downloading github.com/gin-contrib/cors v1.7.5
+go: downloading github.com/gin-gonic/gin v1.10.1
+go: downloading github.com/gorilla/securecookie v1.1.2
+go: downloading github.com/mssola/useragent v1.0.0
+go: downloading golang.org/x/oauth2 v0.35.0
+go: downloading github.com/jellydator/ttlcache/v3 v3.4.0
+go: downloading github.com/redis/go-redis/v9 v9.10.0
+go: downloading github.com/go-playground/validator/v10 v10.27.0
+go: downloading github.com/joho/godotenv v1.5.1
+go: downloading github.com/kelseyhightower/envconfig v1.4.0
+go: downloading golang.org/x/sys v0.43.0
+go: downloading github.com/go-jose/go-jose/v4 v4.1.4
+go: downloading golang.org/x/sync v0.20.0
+go: downloading github.com/gin-contrib/sse v1.1.0
+go: downloading golang.org/x/net v0.53.0
+go: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+go: downloading github.com/gabriel-vasile/mimetype v1.4.10
+go: downloading github.com/go-playground/universal-translator v0.18.1
+go: downloading github.com/leodido/go-urn v1.4.0
+go: downloading golang.org/x/crypto v0.50.0
+go: downloading golang.org/x/text v0.36.0
+go: downloading go.yaml.in/yaml/v2 v2.4.3
+go: downloading github.com/ugorji/go/codec v1.3.0
+go: downloading github.com/go-playground/locales v0.14.1
+=== RUN   TestC130_ProxyForwardsViewerBearer_WhenApiAccessGateAllows
+    c130_local_e2e_test.go:97: [C130][proxy POSITIVE] access gate 200 -> Authenticate accepted Viewer; sandboxId=sbx-c130-owned-by-owner didRedirect=false accessHits=1 authStripped=true (proxy WILL forward toolbox)
+--- PASS: TestC130_ProxyForwardsViewerBearer_WhenApiAccessGateAllows (0.00s)
+=== RUN   TestC130_ProxyRejectsBearer_WhenApiAccessGateDenies
+    c130_local_e2e_test.go:120: [C130][proxy NEGATIVE] access gate 404 -> Authenticate rejected (err=unauthorized: authentication failed: Bearer token is invalid) (proves proxy really relies on the membership gate)
+--- PASS: TestC130_ProxyRejectsBearer_WhenApiAccessGateDenies (0.00s)
+PASS
+ok  	github.com/daytonaio/proxy/pkg/proxy	0.008s

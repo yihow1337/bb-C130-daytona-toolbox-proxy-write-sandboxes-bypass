@@ -1,0 +1,32 @@
+  console.log
+    [C130][A] API ToolboxController + Viewer -> AccessDeniedException status=403 (DENIED, expected)
+
+      at Object.<anonymous> (src/sandbox/controllers/c130.local-e2e.authz.spec.ts:79:13)
+
+  console.log
+    [C130][B] Proxy gate PreviewController.hasSandboxAccess + SAME Viewer -> true (ALLOWED => proxy forwards toolbox)
+
+      at Object.<anonymous> (src/sandbox/controllers/c130.local-e2e.authz.spec.ts:88:13)
+
+  console.log
+    [C130][control-1] API ToolboxController + Developer -> allowed (proves guard really enforces write:sandboxes)
+
+      at Object.<anonymous> (src/sandbox/controllers/c130.local-e2e.authz.spec.ts:95:13)
+
+  console.log
+    [C130][control-2] Proxy gate + outsider -> NotFound (proves gate really checks membership)
+
+      at Object.<anonymous> (src/sandbox/controllers/c130.local-e2e.authz.spec.ts:103:13)
+
+PASS daytona apps/api/src/sandbox/controllers/c130.local-e2e.authz.spec.ts (6.708 s)
+  [C130] API ToolboxController (write:sandboxes) vs proxy gate PreviewController.hasSandboxAccess (membership)
+    ✓ (A) NEGATIVE: Viewer member is DENIED on API ToolboxController path (403) (16 ms)
+    ✓ (B) POSITIVE: SAME Viewer member is ALLOWED by PreviewController.hasSandboxAccess (proxy sole gate) (1 ms)
+    ✓ (control-1) Developer member (has write:sandboxes) is ALLOWED on API ToolboxController path (1 ms)
+    ✓ (control-2) Non-member outsider is DENIED by PreviewController.hasSandboxAccess (404) (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        6.882 s
+Ran all test suites matching apps/api/src/sandbox/controllers/c130.local-e2e.authz.spec.ts.
